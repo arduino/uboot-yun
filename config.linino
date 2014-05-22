@@ -1,0 +1,9 @@
+
+# Copyright (C) 2013 DogHunter
+
+export COMPRESSED_UBOOT=0
+#export CONFIG_HORNET_1_1_WAR=1
+#export NEW_DDR_TAP_CAL=1
+export FLASH_SIZE=16
+export CONFIG_HORNET_XTAL=25
+#export CONFIG_LININO_DDR2=1
