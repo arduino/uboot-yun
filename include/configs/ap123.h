@@ -469,6 +469,14 @@
 /* For Merlin, both PCI, PCI-E interfaces are valid */
 #define AR7240_ART_PCICFG_OFFSET        12
 
+#define CONFIG_BOOT_RETRY_TIME		-1
+#define CONFIG_AUTOBOOT_KEYED
+#define CONFIG_AUTOBOOT_PROMPT		"autoboot in %d seconds (stop with 'lin')...\n"
+#define CONFIG_AUTOBOOT_STOP_STR	"lin"
+#define CONFIG_ZERO_BOOTDELAY_CHECK
+#define CONFIG_RESET_TO_RETRY		1
+#define CONFIG_BOOT_RETRY_MIN		1
+
 #include <cmd_confdefs.h>
 
 #endif	/* __CONFIG_H */
