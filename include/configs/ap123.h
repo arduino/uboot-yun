@@ -454,6 +454,8 @@
 #define CFG_BOOTM_LEN			(16 << 20) /* 16 MB */
 #define CFG_HUSH_PARSER
 #define CFG_PROMPT_HUSH_PS2		"hush>"
+#undef CFG_PROMPT
+#define CFG_PROMPT 	"linino> "
 
 /*
 ** Parameters defining the location of the calibration/initialization
