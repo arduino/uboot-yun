@@ -17,3 +17,5 @@ endif
 # RAM version
 # TEXT_BASE = 0x83fc0000
 # TEXT_BASE = 0x80100000
+
+ETH_CONFIG=_f1e
