@@ -343,6 +343,19 @@ ifdef BOARD_STRING
 endif
 	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240 linino
 	
+linino_chow_config		    : 	unconfig
+	@echo '#define CONFIG_AP123 1' >>include/config.h
+	@echo '#define CONFIG_ROOTFS_TYPE "rootfstype=squashfs"' >>include/config.h
+	@echo "#define CONFIG_AR7240 1" >>include/config.h
+	@echo "#define CONFIG_WASP 1" >>include/config.h
+	@echo '#define CFG_AG7240_NMACS 1' >>include/config.h
+	@echo "#define FLASH_SIZE $(FLASH_SIZE)" >>include/config.h
+	@echo '#define CONFIG_F1E_PHY 1' >>include/config.h
+ifdef BOARD_STRING
+	@echo "#define BOARD_STRING 1" >>include/config.h
+endif
+	@./mkconfig -a ap123 mips mips ap123 ar7240 ar7240 linino
+	
 #########################################################################
 #########################################################################
 #########################################################################
