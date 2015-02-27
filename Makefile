@@ -344,6 +344,7 @@ endif
 	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240 linino
 	
 linino_chow_config		    : 	unconfig
+	@echo '#define CONFIG_LININO 1' >>include/config.h
 	@echo '#define CONFIG_AP123 1' >>include/config.h
 	@echo '#define CONFIG_ROOTFS_TYPE "rootfstype=squashfs"' >>include/config.h
 	@echo "#define CONFIG_AR7240 1" >>include/config.h

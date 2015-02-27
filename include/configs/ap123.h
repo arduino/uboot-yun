@@ -6,6 +6,7 @@
 #define __CONFIG_H
 
 #include <configs/ar7240.h>
+#include <config.h>
 
 #ifndef FLASH_SIZE
 #define FLASH_SIZE		8
@@ -89,7 +90,11 @@
 #define BC "bc=mi124_f1e\0"
 #endif
 #if CONFIG_AP123
-#define BC "bc=ap123\0"
+#	if CONFIG_LININO
+#		define BC "bc=linino-chowchow\0"
+#	else
+#		define BC "bc=ap123\0"
+#	endif
 #endif
 
 #define __gen_cmd(n, a, f, ec, cc, el)		\
@@ -146,7 +151,22 @@
 		 * to maintain the same minor no. as in the normal u-boot.
 		 */
 #		define MTDPARTS_DEFAULT	"mtdparts=ath-nor0:32k(u-boot1),32k(u-boot2),3008k(rootfs),896k(uImage),64k(mib0),64k(ART)"
-#	else /* COMPRESSED_UBOOT */
+#	elif defined (CONFIG_LININO)
+#		define ATH_U_FILE	u-boot.bin
+#		define ATH_F_FILE	lininoIO-generic-${bc}-rootfs-squashfs.bin
+#		define ATH_F_LEN	$filesize
+#		define ATH_F_ADDR	0x9f050000
+#		define ATH_K_FILE	lininoIO-generic-${bc}-kernel.bin
+#		define ATH_K_ADDR	0x9fEa0000
+#		define MTDPARTS_DEFAULT	"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware) "
+#		define MTDPARTSENV_DEFAULT	"addparts=setenv bootargs ${bootargs} mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
+#		define TTYENV_DEFAULT	"addtty=setenv bootargs ${bootargs} console=ttyS0,115200\0"
+#		define ROOTFS_DEFAULT	"rootfstype=squashfs,jffs2 noinitrd "
+#		define ROOTFSENV_DEFAULT	"addrootfs=setenv bootargs ${bootargs} rootfstype=squashfs,jffs2 noinitrd\0"
+#		define BOARD_DEFAULT	"board=linino-chowchow "
+#		define BOARDENV_DEFAULT	"addboard=setenv bootargs board=linino-chowchow\0"
+#		define CONSOLE_DEFAULT	"console=ttyS0,115200 "
+#	else
 #		define ATH_U_FILE	u-boot.bin
 #		define ATH_F_FILE	${bc}-jffs2
 #		define ATH_F_LEN	$filesize
@@ -194,9 +214,18 @@
 #endif
 
 #define CONFIG_EXTRA_ENV_SETTINGS	\
+	BC	\
+	BOARDENV_DEFAULT	\
+	TTYENV_DEFAULT	\
+	MTDPARTSENV_DEFAULT	\
+	ROOTFSENV_DEFAULT	\
 	"dir=\0" ATH_U_CMD ATH_F_CMD ATH_K_CMD ""
 
+#ifdef CONFIG_LININO
+#define	CONFIG_BOOTARGS		BOARD_DEFAULT CONSOLE_DEFAULT ROOTFS_DEFAULT MTDPARTS_DEFAULT
+#else
 #define	CONFIG_BOOTARGS		"console=ttyS0,115200 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
+#endif
 
 #undef CFG_PLL_FREQ
 
@@ -312,7 +341,11 @@
 #ifndef CONFIG_ATH_NAND_SUPPORT
 #	define CFG_ENV_ADDR		0x9f040000
 #	if (FLASH_SIZE == 16)
-#		define CONFIG_BOOTCOMMAND "bootm 0x9f550000"
+#		ifdef CONFIG_LININO
+#			define CONFIG_BOOTCOMMAND	"run addboard; run addtty;run addparts; run addrootfs; bootm 0x9fEa0000"
+#		else
+#			define CONFIG_BOOTCOMMAND "bootm 0x9f550000"
+#		endif
 #	else  /* FLASH_SIZE == 16 */
 #		ifdef COMPRESSED_UBOOT
 #			if (FLASH_SIZE == 4)
