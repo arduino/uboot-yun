@@ -84,7 +84,7 @@
 #undef MTDPARTS_DEFAULT
 
 #if defined (CONFIG_LININO)
-#		define ATH_U_FILE	u-boot.bin
+#		define ATH_U_FILE	u-boot-${board}.bin
 #		define ATH_F_FILE	lininoIO-generic-${board}-rootfs-squashfs.bin
 #		define ATH_F_LEN	$filesize
 #		define ATH_F_ADDR	0x9f050000

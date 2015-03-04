@@ -348,16 +348,16 @@ linino_config		    : 	unconfig    hornet_common_config
 
 	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240 linino
 	
-linino_yun_config	:	linino_config
+linino-yun_config	:	linino_config
 	@echo '#define CONFIG_LININO_YUN 1' >>include/config.h
 
-linino_one_config	: 	linino_config
+linino-one_config	: 	linino_config
 	@echo '#define CONFIG_LININO_ONE 1' >>include/config.h
 
-linino_free_config	: 	linino_config
+linino-freedog_config	: 	linino_config
 	@echo '#define CONFIG_LININO_FREEDOG 1' >>include/config.h
 
-linino_chow_config		    : 	unconfig
+linino-chowchow_config		    : 	unconfig
 	@echo '#define CONFIG_LININO 1' >>include/config.h
 	@echo '#define CONFIG_AP123 1' >>include/config.h
 	@echo '#define CONFIG_ROOTFS_TYPE "rootfstype=squashfs"' >>include/config.h

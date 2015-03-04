@@ -138,7 +138,7 @@
 		 */
 #		define MTDPARTS_DEFAULT	"mtdparts=ath-nor0:32k(u-boot1),32k(u-boot2),3008k(rootfs),896k(uImage),64k(mib0),64k(ART)"
 #	elif defined (CONFIG_LININO)
-#		define ATH_U_FILE	u-boot.bin
+#		define ATH_U_FILE	u-boot-${board}.bin
 #		define ATH_F_FILE	lininoIO-generic-${board}-rootfs-squashfs.bin
 #		define ATH_F_LEN	$filesize
 #		define ATH_F_ADDR	0x9f050000
