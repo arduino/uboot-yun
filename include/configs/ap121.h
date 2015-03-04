@@ -80,30 +80,97 @@
 #define	CFG_MONITOR_LEN		(192 << 10)
 
 #undef CONFIG_BOOTARGS
-/* XXX - putting rootfs in last partition results in jffs errors */
-
 /* default mtd partition table */
 #undef MTDPARTS_DEFAULT
 
-#if (FLASH_SIZE == 16)
-#define CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:02 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),14656k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
-#define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),14656k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
-#elif (FLASH_SIZE == 8)
-#define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:02 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),6464k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
-#define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),6464k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
-#elif (FLASH_SIZE == 4)
-#define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:02 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),2752k(rootfs),896k(uImage),64k(NVRAM),64k(ART)"
-#define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),2752k(rootfs),896k(uImage),64k(NVRAM),64k(ART)"
+#if defined (CONFIG_LININO)
+#		define ATH_U_FILE	u-boot.bin
+#		define ATH_F_FILE	lininoIO-generic-${board}-rootfs-squashfs.bin
+#		define ATH_F_LEN	$filesize
+#		define ATH_F_ADDR	0x9f050000
+#		define ATH_K_FILE	lininoIO-generic-${board}-kernel.bin
+#		define ATH_K_ADDR	0x9fEa0000
+
+#		define MTDPARTS_DEFAULT		"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
+#		define MTDPARTSENV_DEFAULT	"addparts=setenv bootargs ${bootargs} mtdparts=${mtdparts}\0"
+#		define ROOTFS_DEFAULT		"rootfstype=squashfs,jffs2 noinitrd "
+#		define ROOTFSENV_DEFAULT	"addrootfs=setenv bootargs ${bootargs} rootfstype=squashfs,jffs2 noinitrd\0"
+#		define BOARDENV_DEFAULT		"addboard=setenv bootargs board=${board}\0"
+#		define TTYENV_DEFAULT		"addtty=setenv bootargs ${bootargs} console=${console}\0"
+#		define ERASE_ENV			"erase_env=erase 0x9f040000 +0x10000\0"
+#		if CONFIG_LININO_YUN
+#			define BOARD_DEFAULT	"board=linino-yun\0"
+#		elif CONFIG_LININO_ONE
+#			define BOARD_DEFAULT	"board=linino-one\0"
+#		elif CONFIG_LININO_FREEDOG
+#			define BOARD_DEFAULT	"board=linino-freedog\0"
+#		else 
+#			define BOARD_DEFAULT	"board=linino\0"
+#		endif
+#		if CONFIG_LININO_IO
+#			define CONSOLE_LININOIO_DEFAULT	"console=spicons\0"
+#		else
+#			define CONSOLE_DEFAULT	"console=ttyATH0,250000\0"
+#		endif
+#		undef CONFIG_BAUDRATE
+#		define CONFIG_BAUDRATE	250000
+#	endif
+
+#ifndef CONFIG_LININO
+#	if (FLASH_SIZE == 16)
+#		define CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:02 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),14656k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
+#		define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),14656k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
+#	elif (FLASH_SIZE == 8)
+#		define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:02 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),6464k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
+#		define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),6464k(rootfs),1280k(uImage),64k(NVRAM),64k(ART)"
+#	elif (FLASH_SIZE == 4)
+#		define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:02 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),2752k(rootfs),896k(uImage),64k(NVRAM),64k(ART)"
+#		define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:256k(u-boot),64k(u-boot-env),2752k(rootfs),896k(uImage),64k(NVRAM),64k(ART)"
+#	else
+#		define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:01 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:64k(u-boot),1216k(rootfs),640k(uImage),64k(NVRAM),64k(ART)"
+#		define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:64k(u-boot),1152k(rootfs),704k(uImage),64k(NVRAM),64k(ART)"
+#	endif
+
+
+#	if (BOARD_STRING == 1)
+#		undef CONFIG_BOOTARGS
+#		undef MTDPARTS_DEFAULT
+#		define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:01 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:64k(u-boot),3008k(rootfs),896k(uImage),64k(mib0),64k(ART)"
+#		define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:64k(u-boot),3008k(rootfs),896k(uImage),64k(NVRAM),64k(ART)"
+#	endif
 #else
-#define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:01 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:64k(u-boot),1216k(rootfs),640k(uImage),64k(NVRAM),64k(ART)"
-#define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:64k(u-boot),1152k(rootfs),704k(uImage),64k(NVRAM),64k(ART)"
+
+// CONFIG_LININO
+
+#ifndef ATH_EXTRA_ENV
+#	define ATH_EXTRA_ENV
 #endif
 
-#if (BOARD_STRING == 1)
-#undef CONFIG_BOOTARGS
-#undef MTDPARTS_DEFAULT
-#define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:01 rootfstype=squashfs init=/sbin/init mtdparts=ar7240-nor0:64k(u-boot),3008k(rootfs),896k(uImage),64k(mib0),64k(ART)"
-#define MTDPARTS_DEFAULT    "mtdparts=ar7240-nor0:64k(u-boot),3008k(rootfs),896k(uImage),64k(NVRAM),64k(ART)"
+#ifndef ATH_U_CMD
+#	define ATH_U_CMD	gen_cmd(lu, 0x9f000000, ATH_U_FILE)
+#endif
+
+#ifndef ATH_F_CMD
+#	define ATH_F_CMD	gen_cmd_el(lf, ATH_F_ADDR, ATH_F_FILE, ATH_F_LEN)
+#endif
+
+#ifndef ATH_K_CMD
+#	define ATH_K_CMD	gen_cmd(lk, ATH_K_ADDR, ATH_K_FILE)
+#endif
+
+#define CONFIG_EXTRA_ENV_SETTINGS	\
+	BOARD_DEFAULT	\
+	BOARDENV_DEFAULT	\
+	CONSOLE_DEFAULT	\
+	TTYENV_DEFAULT	\
+	MTDPARTS_DEFAULT	\
+	MTDPARTSENV_DEFAULT	\
+	ROOTFSENV_DEFAULT	\
+	ERASE_ENV	\
+	"dir=\0" ATH_U_CMD ATH_F_CMD ATH_K_CMD ""
+
+#define	CONFIG_BOOTARGS
+
 #endif
 
 #undef CFG_PLL_FREQ
@@ -223,7 +290,11 @@
 #define CFG_ENV_SIZE		0x10000
 
 #if (FLASH_SIZE == 16)
-    #define CONFIG_BOOTCOMMAND "bootm 0x9fea0000"
+#		ifdef CONFIG_LININO
+#			define CONFIG_BOOTCOMMAND	"run addboard; run addtty;run addparts; run addrootfs; bootm 0x9fEa0000"
+#		else
+#			define CONFIG_BOOTCOMMAND "bootm 0x9fea0000"
+#		endif
 #elif (FLASH_SIZE == 8)
     #define CONFIG_BOOTCOMMAND "bootm 0x9f6a0000"
 #elif (FLASH_SIZE == 4)

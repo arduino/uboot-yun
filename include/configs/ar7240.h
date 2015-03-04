@@ -5,6 +5,21 @@
 #ifndef __AR7240_H
 #define __AR7240_H
 
+#define __gen_cmd(n, a, f, ec, cc, el)		\
+	#n "=tftp 0x80060000 ${dir}" #f "&&"	\
+	#ec " " #a " " #el "&&"			\
+	#cc " $fileaddr " #a " $filesize\0"
+
+#define gen_cmd(n, a, f)			\
+	__gen_cmd(n, a, f, erase, cp.b, +$filesize)
+
+#define gen_cmd_el(n, a, f, el)			\
+	__gen_cmd(n, a, f, erase, cp.b, +el)
+
+#define nand_gen_cmd(n, a, f, s)		\
+	__gen_cmd(n, a, f, nand erase, nand write, s)
+
+
 #define CONFIG_MIPS32		1  /* MIPS32 CPU core	*/
 
 #define CONFIG_BOOTDELAY	4	/* autoboot after 4 seconds	*/

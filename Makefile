@@ -335,14 +335,28 @@ ifeq ($(CONFIG_LININO_DDR2), 1)
 	@echo "#define CONFIG_LININO_DDR2 1" >>include/config.h
 endif
 
+#########################################################################
+## LININO BOARDS MIPS32 AR7100 (24K)
+#########################################################################
 
 linino_config		    : 	unconfig    hornet_common_config
 	@echo "#define FLASH_SIZE $(FLASH_SIZE)" >>include/config.h
-ifdef BOARD_STRING
-	@echo "#define BOARD_STRING 1" >>include/config.h
-endif
+	@echo '#define CONFIG_LININO 1' >>include/config.h
+	@echo "#define CONFIG_HORNET_1_1_WAR 1" >>include/config.h
+	@echo "#define NEW_DDR_TAP_CAL 1" >>include/config.h
+	@echo "#define CONFIG_LININO_DDR2 1" >>include/config.h
+
 	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240 linino
 	
+linino_yun_config	:	linino_config
+	@echo '#define CONFIG_LININO_YUN 1' >>include/config.h
+
+linino_one_config	: 	linino_config
+	@echo '#define CONFIG_LININO_ONE 1' >>include/config.h
+
+linino_free_config	: 	linino_config
+	@echo '#define CONFIG_LININO_FREEDOG 1' >>include/config.h
+
 linino_chow_config		    : 	unconfig
 	@echo '#define CONFIG_LININO 1' >>include/config.h
 	@echo '#define CONFIG_AP123 1' >>include/config.h
@@ -352,9 +366,7 @@ linino_chow_config		    : 	unconfig
 	@echo '#define CFG_AG7240_NMACS 1' >>include/config.h
 	@echo "#define FLASH_SIZE $(FLASH_SIZE)" >>include/config.h
 	@echo '#define CONFIG_F1E_PHY 1' >>include/config.h
-ifdef BOARD_STRING
-	@echo "#define BOARD_STRING 1" >>include/config.h
-endif
+
 	@./mkconfig -a ap123 mips mips ap123 ar7240 ar7240 linino
 	
 #########################################################################

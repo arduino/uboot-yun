@@ -97,20 +97,6 @@
 #	endif
 #endif
 
-#define __gen_cmd(n, a, f, ec, cc, el)		\
-	#n "=tftp 0x80060000 ${dir}" #f "&&"	\
-	#ec " " #a " " #el "&&"			\
-	#cc " $fileaddr " #a " $filesize\0"
-
-#define gen_cmd(n, a, f)			\
-	__gen_cmd(n, a, f, erase, cp.b, +$filesize)
-
-#define gen_cmd_el(n, a, f, el)			\
-	__gen_cmd(n, a, f, erase, cp.b, +el)
-
-#define nand_gen_cmd(n, a, f, s)		\
-	__gen_cmd(n, a, f, nand erase, nand write, s)
-
 #ifdef CONFIG_ATH_NAND_SUPPORT
 #	ifdef CONFIG_ATH_NAND_BR	// nand boot rom
 #		define ATH_U_CMD	nand_gen_cmd(lu, 0x0, 2fw.bin, 0x40000)
@@ -153,19 +139,26 @@
 #		define MTDPARTS_DEFAULT	"mtdparts=ath-nor0:32k(u-boot1),32k(u-boot2),3008k(rootfs),896k(uImage),64k(mib0),64k(ART)"
 #	elif defined (CONFIG_LININO)
 #		define ATH_U_FILE	u-boot.bin
-#		define ATH_F_FILE	lininoIO-generic-${bc}-rootfs-squashfs.bin
+#		define ATH_F_FILE	lininoIO-generic-${board}-rootfs-squashfs.bin
 #		define ATH_F_LEN	$filesize
 #		define ATH_F_ADDR	0x9f050000
-#		define ATH_K_FILE	lininoIO-generic-${bc}-kernel.bin
+#		define ATH_K_FILE	lininoIO-generic-${board}-kernel.bin
 #		define ATH_K_ADDR	0x9fEa0000
-#		define MTDPARTS_DEFAULT	"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware) "
-#		define MTDPARTSENV_DEFAULT	"addparts=setenv bootargs ${bootargs} mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
-#		define TTYENV_DEFAULT	"addtty=setenv bootargs ${bootargs} console=ttyS0,115200\0"
-#		define ROOTFS_DEFAULT	"rootfstype=squashfs,jffs2 noinitrd "
+#		define MTDPARTS_DEFAULT		"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
+#		define MTDPARTSENV_DEFAULT	"addparts=setenv bootargs ${bootargs} mtdparts=${mtdparts}\0"
+#		define ROOTFS_DEFAULT		"rootfstype=squashfs,jffs2 noinitrd "
 #		define ROOTFSENV_DEFAULT	"addrootfs=setenv bootargs ${bootargs} rootfstype=squashfs,jffs2 noinitrd\0"
-#		define BOARD_DEFAULT	"board=linino-chowchow "
-#		define BOARDENV_DEFAULT	"addboard=setenv bootargs board=linino-chowchow\0"
-#		define CONSOLE_DEFAULT	"console=ttyS0,115200 "
+#		define BOARDENV_DEFAULT		"addboard=setenv bootargs board=${board}\0"
+#		define TTYENV_DEFAULT		"addtty=setenv bootargs ${bootargs} console=${console}\0"
+#		define BOARD_DEFAULT		"board=linino-chowchow\0"
+#		define ERASE_ENV			"erase_env=erase 0x9f040000 +0x10000\0"
+#		if CONFIG_LININO_IO
+#			define CONSOLE_LININOIO_DEFAULT	"console=spicons\0"
+#		else
+#			define CONSOLE_DEFAULT		"console=ttyS0,115200\0"
+#		endif
+#		undef CONFIG_BAUDRATE
+#		define CONFIG_BAUDRATE	115200
 #	else
 #		define ATH_U_FILE	u-boot.bin
 #		define ATH_F_FILE	${bc}-jffs2
@@ -214,15 +207,18 @@
 #endif
 
 #define CONFIG_EXTRA_ENV_SETTINGS	\
-	BC	\
+	BOARD_DEFAULT	\
 	BOARDENV_DEFAULT	\
+	CONSOLE_DEFAULT	\
 	TTYENV_DEFAULT	\
+	MTDPARTS_DEFAULT	\
 	MTDPARTSENV_DEFAULT	\
 	ROOTFSENV_DEFAULT	\
+	ERASE_ENV	\
 	"dir=\0" ATH_U_CMD ATH_F_CMD ATH_K_CMD ""
 
 #ifdef CONFIG_LININO
-#define	CONFIG_BOOTARGS		BOARD_DEFAULT CONSOLE_DEFAULT ROOTFS_DEFAULT MTDPARTS_DEFAULT
+#define	CONFIG_BOOTARGS
 #else
 #define	CONFIG_BOOTARGS		"console=ttyS0,115200 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
 #endif
