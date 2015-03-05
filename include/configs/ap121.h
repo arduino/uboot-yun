@@ -104,6 +104,8 @@
 #			define BOARD_DEFAULT	"board=linino-one\0"
 #		elif CONFIG_LININO_FREEDOG
 #			define BOARD_DEFAULT	"board=linino-freedog\0"
+#               elif CONFIG_LININO_CHIWAWA
+#                       define BOARD_DEFAULT    "board=linino-chiwawa\0"
 #		else 
 #			define BOARD_DEFAULT	"board=linino\0"
 #		endif

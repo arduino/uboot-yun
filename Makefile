@@ -357,6 +357,9 @@ linino-one_config	: 	linino_config
 linino-freedog_config	: 	linino_config
 	@echo '#define CONFIG_LININO_FREEDOG 1' >>include/config.h
 
+linino-chiwawa_config   :       linino_config
+	@echo '#define CONFIG_LININO_CHIWAWA 1' >>include/config.h
+
 linino-chowchow_config		    : 	unconfig
 	@echo '#define CONFIG_LININO 1' >>include/config.h
 	@echo '#define CONFIG_AP123 1' >>include/config.h
