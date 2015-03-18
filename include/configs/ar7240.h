@@ -25,7 +25,7 @@
 #define CONFIG_BOOTDELAY	4	/* autoboot after 4 seconds	*/
 
 #define CONFIG_BAUDRATE		115200 
-#define CFG_BAUDRATE_TABLE  { 	115200, 250000}
+#define CFG_BAUDRATE_TABLE  { 	115200, 250000, 500000}
 
 #define	CONFIG_TIMESTAMP		/* Print image info with timestamp */
 
