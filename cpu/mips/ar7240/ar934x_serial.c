@@ -206,18 +206,12 @@ int serial_init(void)
     serial_setbrg();
 
 #else
-#ifndef CONFIG_HORNET_EMU
+    val = ar7240_reg_rd(WASP_BOOTSTRAP_REG);
 
-    rdata = ar7240_reg_rd(HORNET_BOOTSTRAP_STATUS);
-    rdata &= HORNET_BOOTSTRAP_SEL_25M_40M_MASK;
-
-    if (rdata)
-        baudRateDivisor = ( 40000000 / (16*baud) ) - 1; // 40 MHz clock is taken as UART clock        
-    else
-        baudRateDivisor = ( 25000000 / (16*baud) ) - 1; // 25 MHz clock is taken as UART clock	        
-#else
-    baudRateDivisor = ( ahb_freq / (16*baud) ) - 1; // 40 MHz clock is taken as UART clock 
-#endif
+    if ((val & WASP_REF_CLK_25) == 0) {
+		baudRateDivisor = ( 25000000 / (16*baud) ) - 1; // 25 MHz clock is taken as UART clock	        
+	else
+		baudRateDivisor = ( 40000000 / (16*baud) ) - 1; // 40 MHz clock is taken as UART clock    
  
     clock_step = 8192;
 
