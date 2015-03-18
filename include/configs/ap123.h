@@ -155,10 +155,10 @@
 #		if CONFIG_LININO_IO
 #			define CONSOLE_LININOIO_DEFAULT	"console=spicons\0"
 #		else
-#			define CONSOLE_DEFAULT		"console=ttyS0,115200\0"
+#			define CONSOLE_DEFAULT		"console=ttyATH0,460800\0"
 #		endif
 #		undef CONFIG_BAUDRATE
-#		define CONFIG_BAUDRATE	115200
+#		define CONFIG_BAUDRATE	250000
 #	else
 #		define ATH_U_FILE	u-boot.bin
 #		define ATH_F_FILE	${bc}-jffs2
@@ -220,7 +220,7 @@
 #ifdef CONFIG_LININO
 #define	CONFIG_BOOTARGS
 #else
-#define	CONFIG_BOOTARGS		"console=ttyS0,115200 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
+#define	CONFIG_BOOTARGS		"console=ttyATH0,460800 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
 #endif
 
 #undef CFG_PLL_FREQ
