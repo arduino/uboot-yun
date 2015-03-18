@@ -11,7 +11,11 @@ ifeq ($(BOARD), ap121)
 OBJS	+= hornet_serial.o
 SOBJS	+= hornet_ddr_init.o
 else
+ifeq ($(BOARD),ap123)
+OBJS	+= ar934x_serial.o
+else
 OBJS	+= ar7240_serial.o
+endif
 endif
 
 ifneq ($(BUILD_EMU), )
