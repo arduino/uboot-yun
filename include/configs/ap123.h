@@ -153,9 +153,9 @@
 #		define BOARD_DEFAULT		"board=linino-chowchow\0"
 #		define ERASE_ENV			"erase_env=erase 0x9f040000 +0x10000\0"
 #		if CONFIG_LININO_IO
-#			define CONSOLE_LININOIO_DEFAULT	"console=spicons\0"
+#			define CONSOLE_DEFAULT	"console=spicons\0"
 #		else
-#			define CONSOLE_DEFAULT		"console=ttyATH0,460800\0"
+#			define CONSOLE_DEFAULT	"console=ttyATH0,460800\0"
 #		endif
 #		undef CONFIG_BAUDRATE
 #		define CONFIG_BAUDRATE	250000

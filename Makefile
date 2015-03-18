@@ -345,7 +345,9 @@ linino_config		    : 	unconfig    hornet_common_config
 	@echo "#define CONFIG_HORNET_1_1_WAR 1" >>include/config.h
 	@echo "#define NEW_DDR_TAP_CAL 1" >>include/config.h
 	@echo "#define CONFIG_LININO_DDR2 1" >>include/config.h
-
+ifeq ($(CONFIG_LININO_IO), 1)
+	@echo "#define CONFIG_LININO_IO 1" >>include/config.h
+endif
 	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240 linino
 	
 linino-yun_config	:	linino_config
@@ -369,7 +371,9 @@ linino-chowchow_config		    : 	unconfig
 	@echo '#define CFG_AG7240_NMACS 1' >>include/config.h
 	@echo "#define FLASH_SIZE $(FLASH_SIZE)" >>include/config.h
 	@echo '#define CONFIG_F1E_PHY 1' >>include/config.h
-
+ifeq ($(CONFIG_LININO_IO), 1)
+	@echo "#define CONFIG_LININO_IO 1" >>include/config.h
+endif
 	@./mkconfig -a ap123 mips mips ap123 ar7240 ar7240 linino
 	
 #########################################################################
