@@ -110,7 +110,7 @@
 #			define BOARD_DEFAULT	"board=linino\0"
 #		endif
 #		if CONFIG_LININO_IO
-#			define CONSOLE_LININOIO_DEFAULT	"console=spicons\0"
+#			define CONSOLE_DEFAULT	"console=spicons\0"
 #		else
 #			define CONSOLE_DEFAULT	"console=ttyATH0,250000\0"
 #		endif
