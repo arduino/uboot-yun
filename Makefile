@@ -353,6 +353,9 @@ endif
 linino-yun_config	:	linino_config
 	@echo '#define CONFIG_LININO_YUN 1' >>include/config.h
 
+linino-yun-mini_config	:	linino_config
+	@echo '#define CONFIG_LININO_YUN_MINI 1' >>include/config.h
+
 linino-one_config	: 	linino_config
 	@echo '#define CONFIG_LININO_ONE 1' >>include/config.h
 
