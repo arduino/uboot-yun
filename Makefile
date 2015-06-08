@@ -365,7 +365,7 @@ linino-freedog_config	: 	linino_config
 linino-chiwawa_config   :       linino_config
 	@echo '#define CONFIG_LININO_CHIWAWA 1' >>include/config.h
 
-linino-chowchow_config		    : 	unconfig
+linino-wasp_config		    : 	unconfig
 	@echo '#define CONFIG_LININO 1' >>include/config.h
 	@echo '#define CONFIG_AP123 1' >>include/config.h
 	@echo '#define CONFIG_ROOTFS_TYPE "rootfstype=squashfs"' >>include/config.h
@@ -378,6 +378,15 @@ ifeq ($(CONFIG_LININO_IO), 1)
 	@echo "#define CONFIG_LININO_IO 1" >>include/config.h
 endif
 	@./mkconfig -a ap123 mips mips ap123 ar7240 ar7240 linino
+
+linino-lei_config		    : 	unconfig linino-wasp_config		
+	@echo '#define CONFIG_LININO_LEI 1' >>include/config.h
+
+linino-tian_config		    : 	unconfig linino-wasp_config
+	@echo '#define CONFIG_LININO_TIAN 1' >>include/config.h
+	@echo '#define CONFIG_BAUDRATE 115200' >>include/config.h
+
+
 	
 #########################################################################
 #########################################################################

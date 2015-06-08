@@ -90,8 +90,10 @@
 #define BC "bc=mi124_f1e\0"
 #endif
 #if CONFIG_AP123
-#	if CONFIG_LININO
-#		define BC "bc=linino-chowchow\0"
+#	if CONFIG_LININO_LEI
+#		define BC "bc=linino-lei\0"
+#	elif CONFIG_LININO_TIAN
+#		define BC "bc=linino-tian\0"
 #	else
 #		define BC "bc=ap123\0"
 #	endif
@@ -150,15 +152,27 @@
 #		define ROOTFSENV_DEFAULT	"addrootfs=setenv bootargs ${bootargs} rootfstype=squashfs,jffs2 noinitrd\0"
 #		define BOARDENV_DEFAULT		"addboard=setenv bootargs board=${board}\0"
 #		define TTYENV_DEFAULT		"addtty=setenv bootargs ${bootargs} console=${console}\0"
-#		define BOARD_DEFAULT		"board=linino-chowchow\0"
+#		ifndef CONFIG_BAUDRATE
+#			define CONFIG_BAUDRATE	250000
+#		endif
+#		if CONFIG_LININO_LEI
+#			define BOARD_DEFAULT		"board=linino-lei\0"
+#		elif CONFIG_LININO_TIAN
+#			define BOARD_DEFAULT		"board=linino-tian\0"
+#		else
+#			define BOARD_DEFAULT		"board=linino\0"
+#		endif
 #		define ERASE_ENV			"erase_env=erase 0x9f040000 +0x10000\0"
 #		if CONFIG_LININO_IO
-#			define CONSOLE_DEFAULT	"console=spicons\0"
+#			if CONFIG_LININO_TIAN
+#				define CONSOLE_DEFAULT	"console=ttyATH0,115200\0"
+#			else
+#				define CONSOLE_DEFAULT	"console=spicons\0"
+#			endif
 #		else
 #			define CONSOLE_DEFAULT	"console=ttyATH0,460800\0"
 #		endif
-#		undef CONFIG_BAUDRATE
-#		define CONFIG_BAUDRATE	250000
+
 #	else
 #		define ATH_U_FILE	u-boot.bin
 #		define ATH_F_FILE	${bc}-jffs2
