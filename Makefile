@@ -384,6 +384,7 @@ endif
 
 linino-lei_config		    : 	unconfig linino-wasp_config		
 	@echo '#define CONFIG_LININO_LEI 1' >>include/config.h
+	@echo '#define CONFIG_BAUDRATE 115200' >>include/config.h
 
 linino-tian_config		    : 	unconfig linino-wasp_config
 	@echo '#define CONFIG_LININO_TIAN 1' >>include/config.h
