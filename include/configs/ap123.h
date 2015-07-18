@@ -141,10 +141,10 @@
 #		define MTDPARTS_DEFAULT	"mtdparts=ath-nor0:32k(u-boot1),32k(u-boot2),3008k(rootfs),896k(uImage),64k(mib0),64k(ART)"
 #	elif defined (CONFIG_LININO)
 #		define ATH_U_FILE	u-boot-${board}.bin
-#		define ATH_F_FILE	lininoIO-generic-${board}-rootfs-squashfs.bin
+#		define ATH_F_FILE	linino-lede-nightly-generic-${board}-rootfs-squashfs.bin
 #		define ATH_F_LEN	$filesize
 #		define ATH_F_ADDR	0x9f050000
-#		define ATH_K_FILE	lininoIO-generic-${board}-kernel.bin
+#		define ATH_K_FILE	linino-lede-nightly-generic-${board}-kernel.bin
 #		define ATH_K_ADDR	0x9fEa0000
 #		define MTDPARTS_DEFAULT		"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
 #		define MTDPARTSENV_DEFAULT	"addparts=setenv bootargs ${bootargs} mtdparts=${mtdparts}\0"
@@ -156,9 +156,9 @@
 #			define CONFIG_BAUDRATE	250000
 #		endif
 #		if CONFIG_LININO_LEI
-#			define BOARD_DEFAULT		"board=linino-lei\0"
+#			define BOARD_DEFAULT		"board=linino-lei ext=lei\0"
 #		elif CONFIG_LININO_TIAN
-#			define BOARD_DEFAULT		"board=linino-tian\0"
+#			define BOARD_DEFAULT		"board=linino-tian ext=tian\0"
 #		else
 #			define BOARD_DEFAULT		"board=linino\0"
 #		endif
@@ -170,7 +170,7 @@
 #				define CONSOLE_DEFAULT	"console=spicons\0"
 #			endif
 #		else
-#			define CONSOLE_DEFAULT	"console=ttyATH0,460800\0"
+#			define CONSOLE_DEFAULT	"console=ttyS0,115200\0"
 #		endif
 
 #	else
@@ -234,7 +234,7 @@
 #ifdef CONFIG_LININO
 #define	CONFIG_BOOTARGS
 #else
-#define	CONFIG_BOOTARGS		"console=ttyATH0,460800 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
+#define	CONFIG_BOOTARGS		"console=ttyS0,115200 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
 #endif
 
 #undef CFG_PLL_FREQ

@@ -85,10 +85,10 @@
 
 #if defined (CONFIG_LININO)
 #		define ATH_U_FILE	u-boot-${board}.bin
-#		define ATH_F_FILE	lininoIO-generic-${board}-rootfs-squashfs.bin
+#		define ATH_F_FILE	linino-lede-nightly-generic-${board}-rootfs-squashfs.bin
 #		define ATH_F_LEN	$filesize
 #		define ATH_F_ADDR	0x9f050000
-#		define ATH_K_FILE	lininoIO-generic-${board}-kernel.bin
+#		define ATH_K_FILE	linino-lede-nightly-generic-${board}-kernel.bin
 #		define ATH_K_ADDR	0x9fEa0000
 
 #		define MTDPARTS_DEFAULT		"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
