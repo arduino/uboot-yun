@@ -108,6 +108,8 @@
 #			define BOARD_DEFAULT	"board=linino-freedog\0"
 #               elif CONFIG_LININO_CHIWAWA
 #                       define BOARD_DEFAULT    "board=linino-chiwawa\0"
+#		elif CONFIG_LININO_CHIWAWA101
+#			define BOARD_DEFAULT	"board=linino-chiwawa ext=101\0"
 #		else 
 #			define BOARD_DEFAULT	"board=linino\0"
 #		endif
