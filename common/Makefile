@@ -82,6 +82,9 @@ ifeq ($(VXWORKS_UBOOT),1)
 COBJS	+=  cmd_elf.o
 endif
 
+COBJS	+=  cmd_chw.o
+COBJS	+=  cmd_chw101.o
+
 OBJS	= $(AOBJS) $(COBJS)
 
 CPPFLAGS += -I..
