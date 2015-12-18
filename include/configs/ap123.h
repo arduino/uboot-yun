@@ -170,7 +170,7 @@
 #				define CONSOLE_DEFAULT	"console=spicons\0"
 #			endif
 #		else
-#			define CONSOLE_DEFAULT	"console=ttyS0,115200\0"
+#			define CONSOLE_DEFAULT	"console=ttyATH0,115200\0"
 #		endif
 
 #	else
@@ -234,7 +234,7 @@
 #ifdef CONFIG_LININO
 #define	CONFIG_BOOTARGS
 #else
-#define	CONFIG_BOOTARGS		"console=ttyS0,115200 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
+#define	CONFIG_BOOTARGS		"console=ttyATH0,115200 root=" ATH_ROOT_DEV " rootfstype=squashfs init=/sbin/init " MTDPARTS_DEFAULT
 #endif
 
 #undef CFG_PLL_FREQ
