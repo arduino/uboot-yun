@@ -99,15 +99,15 @@
 #		define TTYENV_DEFAULT		"addtty=setenv bootargs ${bootargs} console=${console}\0"
 #		define ERASE_ENV			"erase_env=erase 0x9f040000 +0x10000\0"
 #		if CONFIG_LININO_YUN
-#			define BOARD_DEFAULT	"board=linino-yun\0"
+#			define BOARD_DEFAULT	"board=linino-yun ext=yun\0"
 #		elif CONFIG_LININO_YUN_MINI
-#			define BOARD_DEFAULT	"board=linino-yun-mini\0"
+#			define BOARD_DEFAULT	"board=linino-yun-mini ext=yun-mini\0"
 #		elif CONFIG_LININO_ONE
-#			define BOARD_DEFAULT	"board=linino-one\0"
+#			define BOARD_DEFAULT	"board=linino-one ext=one\0"
 #		elif CONFIG_LININO_FREEDOG
-#			define BOARD_DEFAULT	"board=linino-freedog\0"
-#               elif CONFIG_LININO_CHIWAWA
-#                       define BOARD_DEFAULT    "board=linino-chiwawa\0"
+#			define BOARD_DEFAULT	"board=linino-freedog ext=freedog\0"
+#		elif CONFIG_LININO_CHIWAWA
+#			define BOARD_DEFAULT    "board=linino-chiwawa ext=chiwawa\0"
 #		elif CONFIG_LININO_CHIWAWA101
 #			define BOARD_DEFAULT	"board=linino-chiwawa ext=101\0"
 #		else 
