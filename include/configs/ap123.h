@@ -146,7 +146,7 @@
 #		define ATH_F_ADDR	0x9f050000
 #		define ATH_K_FILE	linino-lede-nightly-generic-${board}-kernel.bin
 #		define ATH_K_ADDR	0x9fEa0000
-#		define MTDPARTS_DEFAULT		"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14656k(rootfs),1280k(kernel),64k(nvram),64k(art),15936k@0x50000(firmware)\0"
+#		define MTDPARTS_DEFAULT		"mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),15936k(firmware),64k(nvram),64k(art)ro\0"
 #		define MTDPARTSENV_DEFAULT	"addparts=setenv bootargs ${bootargs} mtdparts=${mtdparts}\0"
 #		define ROOTFS_DEFAULT		"rootfstype=squashfs,jffs2 noinitrd "
 #		define ROOTFSENV_DEFAULT	"addrootfs=setenv bootargs ${bootargs} rootfstype=squashfs,jffs2 noinitrd\0"
@@ -352,7 +352,7 @@
 #	define CFG_ENV_ADDR		0x9f040000
 #	if (FLASH_SIZE == 16)
 #		ifdef CONFIG_LININO
-#			define CONFIG_BOOTCOMMAND	"run addboard; run addtty;run addparts; run addrootfs; bootm 0x9fEa0000"
+#			define CONFIG_BOOTCOMMAND	"run addboard; run addtty;run addparts; run addrootfs; bootm 0x9f050000 || bootm 0x9fEa0000"
 #		else
 #			define CONFIG_BOOTCOMMAND "bootm 0x9f550000"
 #		endif
@@ -516,8 +516,8 @@
 
 #define CONFIG_BOOT_RETRY_TIME		-1
 #define CONFIG_AUTOBOOT_KEYED
-#define CONFIG_AUTOBOOT_PROMPT		"autoboot in %d seconds (stop with 'lin')...\n"
-#define CONFIG_AUTOBOOT_STOP_STR	"lin"
+#define CONFIG_AUTOBOOT_PROMPT		"autoboot in %d seconds (stop with 'ard')...\n"
+#define CONFIG_AUTOBOOT_STOP_STR	"ard"
 #define CONFIG_ZERO_BOOTDELAY_CHECK
 #define CONFIG_RESET_TO_RETRY		1
 #define CONFIG_BOOT_RETRY_MIN		1

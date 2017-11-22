@@ -76,7 +76,8 @@ CROSS_COMPILE = i386-linux-
 endif
 endif
 ifeq ($(ARCH),mips)
-CROSS_COMPILE = mips-linux-
+#CROSS_COMPILE = mips-linux-
+CROSS_COMPILE = mips-openwrt-linux-
 endif
 ifeq ($(ARCH),nios)
 CROSS_COMPILE = nios-elf-
